@@ -1,8 +1,10 @@
-from .forms import CartAddProductForm
+from cart.forms import CartAddProductForm
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http  import HttpResponse,HttpResponseRedirect,HttpRequest
 from django.contrib.auth.decorators import login_required
-from .models import Item, Profile,Request,Buyer,Cart
+from .models import Item,Profile,Request,Buyer,Category
+from cart.cart import Cart
+# from oders.models import Oder
 from django.contrib.auth.models import User
 from .forms import ImageForm, ProfileForm, BuyerLoginForm,RequestForm,BuyerForm
 from .email import send_notification_email
@@ -10,13 +12,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.views.decorators.http import require_POST
-
-# from django.template import Context
-
-
- 
- 
- 
+import datetime as dt
  
 
 def home(request): 
@@ -24,7 +20,8 @@ def home(request):
     # category = None
     # categories = Category.objects.all()
     # item = Item.objects.get(id)
-    items = Item.get_all_items()
+    items = Item.objects.all()
+    # item = Item.objects.get(id)
     # if category_slug:
     #     category = get_object_or_404(Category, slug=category_slug)
     #     products = Product.objects.filter(category=category)
@@ -37,11 +34,11 @@ def home(request):
     return render(request, 'home.html', {'title':title,'items':items})
 
 
-def detail(request, id):
-    item = Item.objects.filter(id=id)
+def detail(request, item_id):
+    item = Item.objects.filter(id=item_id)
     cart_product_form = CartAddProductForm()
     
-    return render(request, 'detail.html',{"item": item,"cart_product_form": cart_product_form})
+    return render(request, 'detail.html',{"item": item,"cart_product_form": cart_product_form,"item_id":item_id},item_id)
 
 
 @login_required(login_url='/accounts/login/')
@@ -158,22 +155,22 @@ def post_request(request):
     return render(request, 'request_form.html',{'form':form})
 
 
-@require_POST
-def cart_add(request, item_id):
-    cart = Cart(request)  # create a new cart object passing it the request object 
-    item = get_object_or_404(Item, id=item_id) 
-    form = CartAddProductForm(request.POST)
-    if form.is_valid():
-        cd = form.cleaned_data
-        cart.add(item=item, quantity=cd['quantity'], update_quantity=cd['update'])
-    return redirect('home')
+# @require_POST
+# def cart_add(request, item_id):
+#     cart = Cart(request)  # create a new cart object passing it the request object 
+#     item = get_object_or_404(Item, id=item_id) 
+#     form = CartAddProductForm(request.POST)
+#     if form.is_valid():
+#         cd = form.cleaned_data
+#         cart.add(item=item, quantity=cd['quantity'], update_quantity=cd['update'])
+#     return redirect('home')
 
 
-def cart_remove(request, item_id):
-    cart = Cart(request)
-    item = get_object_or_404(Item, id=item_id)
-    cart.remove(item)
-    return redirect('cart_detail',item_id)
+# def cart_remove(request, item_id):
+#     cart = Cart(request)
+#     item = get_object_or_404(Item, id=item_id)
+#     cart.remove(item)
+#     return redirect('cart_detail',item_id)
 
 
 def cart_detail(request):
@@ -181,3 +178,30 @@ def cart_detail(request):
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
     return render(request, 'cart_detail.html', {'cart': cart})
+
+
+def product_list(request, category_slug=None):
+    category = None
+    categories = Category.objects.all()
+    today = dt.date.today()
+    products = Item.objects.filter(expiry_date=today)
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        products = Item.objects.filter(category=category)
+
+    context = {
+        'category': category,
+        'categories': categories,
+        'products': products
+    }
+    return render(request, 'shop/product/list.html', context)
+
+
+def product_detail(request, id, slug):
+    product = get_object_or_404(Product, id=id, slug=slug, available=True)
+    cart_product_form = CartAddProductForm()
+    context = {
+        'product': product,
+        'cart_product_form': cart_product_form
+    }
+    return render(request, 'shop/product/detail.html',context)

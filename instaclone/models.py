@@ -8,11 +8,6 @@ from django.conf import settings
 from decimal import Decimal
 
 
-
- 
-
-
-# Create your models here.
 class Item(models.Model):
     item_name = models.CharField(max_length = 50)     
     profile = models.ForeignKey(User,on_delete=models.CASCADE)    
@@ -21,9 +16,6 @@ class Item(models.Model):
     expiry_date = models.DateTimeField(auto_now_add=False)
     original_price = models.IntegerField()
     today_price = models.IntegerField()
-
-     
-   
 
     class Meta:
         ordering = ('upload_date',)
@@ -52,7 +44,7 @@ class Item(models.Model):
         return items
         
     def get_absolute_url(self):
-        return reverse('item_detail' , args=[self.id])
+        return reverse('product_detail' , args=[self.id])
 
 class Profile(models.Model):
     business_logo = models.ImageField(upload_to='profile/',blank=True)
@@ -101,57 +93,76 @@ class Request(models.Model):
             self.save()
         
     
+class Category(models.Model):
+    name = models.CharField(max_length=150, db_index=True)
+    slug = models.SlugField(max_length=150, unique=True ,db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-class Cart(object):
-    def __init__(self, request):
-        self.session = request.session
-        cart = self.session.get(settings.CART_SESSION_ID)
-        if not cart:
-            cart = self.session[settings.CART_SESSION_ID] = {}
-        self.cart = cart
+    class Meta:
+        ordering = ('name', )
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
 
-    def add(self,  item, quantity=1, update_quantity=False):
-        item_id = str(item.id)
-        if item_id not in self.cart:
-            self.cart[item_id] = {'quantity': 0, 'today_price': str(item.today_price)}
-        if update_quantity:
-            self.cart[item_id]['quantity'] = quantity
-        else:
-            self.cart[item_id]['quantity'] += quantity
-        self.save()
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('product_list_by_category', args=[self.slug])
 
 
-    def save(self):
-        self.session[settings.CART_SESSION_ID] = self.cart
-        self.session.modified = True
 
-    def remove(self,  item):
-        item_id = str(item.id)
-        if item_id in self.cart:
-            del self.cart[item_id]
-            self.save()
 
-    def __iter__(self):
-        item_ids = self.cart.keys()
-        items = Item.objects.filter(id__in=item_ids)
-        for  item in  items:
-            self.cart[str(item.id)][' item'] =  item
+# class Cart(object):
+#     def __init__(self, request):
+#         self.session = request.session
+#         cart = self.session.get(settings.CART_SESSION_ID)
+#         if not cart:
+#             cart = self.session[settings.CART_SESSION_ID] = {}
+#         self.cart = cart
 
-        for item in self.cart.values():
-            item['today_price'] = Decimal(item['today_price'])
-            item['total_price'] = item['today_price'] * item['quantity']
+#     def add(self,  item, quantity=1, update_quantity=False):
+#         item_id = str(item.id)
+#         if item_id not in self.cart:
+#             self.cart[item_id] = {'quantity': 0, 'today_price': str(item.today_price)}
+#         if update_quantity:
+#             self.cart[item_id]['quantity'] = quantity
+#         else:
+#             self.cart[item_id]['quantity'] += quantity
+#         self.save()
+
+
+#     def save(self):
+#         self.session[settings.CART_SESSION_ID] = self.cart
+#         self.session.modified = True
+
+#     def remove(self,  item):
+#         item_id = str(item.id)
+#         if item_id in self.cart:
+#             del self.cart[item_id]
+#             self.save()
+
+#     def __iter__(self):
+#         item_ids = self.cart.keys()
+#         items = Item.objects.filter(id__in=item_ids)
+#         for  item in  items:
+#             self.cart[str(item.id)][' item'] =  item
+
+#         for item in self.cart.values():
+#             item['today_price'] = Decimal(item['today_price'])
+#             item['total_price'] = item['today_price'] * item['quantity']
     
-            yield item
+#             yield item
 
-    def __len__(self):
-        return sum(item['quantity'] for item in self.cart.values())
+#     def __len__(self):
+#         return sum(item['quantity'] for item in self.cart.values())
 
-    def get_total_price(self):
-        return sum(Decimal(item['today_price']) * item['quantity'] for item in self.cart.values())
+#     def get_total_price(self):
+#         return sum(Decimal(item['today_price']) * item['quantity'] for item in self.cart.values())
 
-    def clear(self):
-        del self.session[settings.CART_SESSION_ID]
-        self.session.modified = True
+#     def clear(self):
+#         del self.session[settings.CART_SESSION_ID]
+#         self.session.modified = True
  
 
 

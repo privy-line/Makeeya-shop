@@ -43,6 +43,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'orders',
     'instaclone',
     'cart',
     'tinymce',
@@ -99,8 +100,8 @@ DATABASES = {
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
-        # 'HOST': config('DB_HOST'),
-        # 'PORT': '',
+        'HOST': config('DB_HOST'),
+        'PORT': '',
     }
 
 }
@@ -151,6 +152,7 @@ STATICFILES_DIRS = (
 )
  
 CART_SESSION_ID = 'cart'
+ODERS_SESSION_ID = 'oders'
 
 # AUTH_PROFILE_MODULE = "account.UserProfile"
 # Configure Django App for Heroku.
