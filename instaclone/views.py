@@ -2,7 +2,7 @@ from cart.forms import CartAddProductForm
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http  import HttpResponse,HttpResponseRedirect,HttpRequest
 from django.contrib.auth.decorators import login_required
-from .models import Item,Profile,Request,Buyer,Category
+from .models import Item,Profile,Request,Buyer,Category,User
 from cart.cart import Cart
 # from oders.models import Oder
 from django.contrib.auth.models import User
@@ -13,24 +13,52 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.views.decorators.http import require_POST
 import datetime as dt
+
+from django.views.generic import CreateView
+from .forms import SellerSignUpForm,BuyerSignUpForm
+# from django.shortcuts import render, get_object_or_404
+# from .models import Category, Product,User
+# from cart.forms import CartAddProductForm
+from django.views.generic import TemplateView
+
+
+class SignUpView(TemplateView):
+    template_name = 'registration/signup.html'
+
+class SellerSignUpView(CreateView):
+    model = User
+    form_class = SellerSignUpForm
+    template_name = 'registration/signup_form.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'seller'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('profile')
+
+
+class BuyerSignUpView(CreateView):
+    model = User
+    form_class = BuyerSignUpForm
+    template_name = 'registration/signup_form.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'buyer'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('cart:cart_detail')
  
 
 def home(request): 
     title = 'Home' 
-    # category = None
-    # categories = Category.objects.all()
-    # item = Item.objects.get(id)
     items = Item.objects.all()
-    # item = Item.objects.get(id)
-    # if category_slug:
-    #     category = get_object_or_404(Category, slug=category_slug)
-    #     products = Product.objects.filter(category=category)
 
-    # context = {
-    #     'category': category,
-    #     'categories': categories,
-    #     'item': item
-    # }
     return render(request, 'home.html', {'title':title,'items':items})
 
 
@@ -38,7 +66,7 @@ def detail(request, item_id):
     item = Item.objects.filter(id=item_id)
     cart_product_form = CartAddProductForm()
     
-    return render(request, 'detail.html',{"item": item,"cart_product_form": cart_product_form,"item_id":item_id},item_id)
+    return render(request, 'detail.html',{"item":item,"cart_product_form":cart_product_form,"item_id":item_id},item_id)
 
 
 @login_required(login_url='/accounts/login/')

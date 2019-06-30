@@ -1,6 +1,36 @@
 from django import forms 
 from django.contrib.auth.models import User
-from .models import Item, Profile,Buyer,Request
+# from .models import Profile,Buyer,Request
+
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.db import transaction
+from .models import Item, User, Profile,Buyer,Request
+from django.forms.utils import ValidationError
+
+
+class BuyerSignUpForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_buyer = True
+        if commit:
+            user.save()
+        return user
+
+
+class SellerSignUpForm(UserCreationForm):    
+    class Meta(UserCreationForm.Meta):
+        model = User
+    @transaction.atomic
+    def save(self):
+        user = super().save(commit=False)
+        user.is_seller = True
+        user.save()
+        seller = Seller.objects.create(user=user)        
+        return user
 
 
 class ImageForm(forms.ModelForm):  

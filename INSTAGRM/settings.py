@@ -38,6 +38,7 @@ SECRET_KEY = '6^e#tmlf_3$)gjzii+7zv1b6y%hyz_f^u0%^j@y*ov5xqpv2w('
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTH_USER_MODEL = 'instaclone.User'
 
 
 # Application definition
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -157,7 +159,5 @@ ODERS_SESSION_ID = 'oders'
 # AUTH_PROFILE_MODULE = "account.UserProfile"
 # Configure Django App for Heroku.
  
-
-
 
 LOGIN_REDIRECT_URL = 'home'
