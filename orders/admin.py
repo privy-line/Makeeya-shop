@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order, OrderItem
+from .models import Order, OrderItem 
 
 
 class OrderItemInline(admin.TabularInline):
@@ -12,6 +12,7 @@ class OrderAdmin(admin.ModelAdmin):
                     'updated']
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
+
 
 
 admin.site.register(Order, OrderAdmin)

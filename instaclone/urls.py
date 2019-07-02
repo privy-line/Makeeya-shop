@@ -12,12 +12,12 @@ urlpatterns=[
     url(r'^edit_profile',views.edit_profile, name='edit_profile'),
     url(r'^profile', views.profile, name='profile'), 
     url(r'^comments/(\d+)',views.comments,name="comments"),
-    url(r'^buyer_registration/',views.buyer_registration,name='buyer_registration'),
-    url(r'^buyer_login/',views.buyer_login,name='buyer_login'),
+ 
     url(r'^request/$', views.post_request, name='post_request'),
     url(r'^product_list$', views.product_list, name='product_list'),
-    url(r'^(?P<category_slug>[-\w]+)/$', views.product_list, name='product_list_by_category'),
+   
     url(r'^(\d+)/$', views.product_detail, name='product_detail'),
+    url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$', views.product_detail, name='product_detail'),
 ]
 
 if settings.DEBUG:

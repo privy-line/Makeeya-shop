@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'shop/base.html' %}
 {% load static %}
 {% block title %}
     Your Shopping Cart
@@ -23,7 +23,7 @@
             </span>
         </h2>
             <table class="table table-striped table-hover">
-                <thead style="background-color: #5AC8FA">
+                <thead style="background-color: rgb(3, 30, 148);color:white;">
                     <tr>
                         <th>Image</th>
                         <th>Product</th>
@@ -59,7 +59,7 @@
                         </tr>
                     {% endwith %}
                 {% endfor %}
-                <tr style="background-color: #5AC8FA">
+                <tr style="background-color: rgb(3, 30, 148);color:white;">
                     <td><b>Total</b></td>
                     <td colspan="4"></td>
                     <td colspan="num"><b>{{ cart.get_total_price }} RWF</b></td>

@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/juru/Desktop/PROJECTS/NEW_MAKEEYA/virtual"
+VIRTUAL_ENV="/home/pauline/Desktop/MAKEEYA/virtual"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

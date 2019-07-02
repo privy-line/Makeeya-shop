@@ -17,7 +17,7 @@ import datetime as dt
 from django.views.generic import CreateView
 from .forms import SellerSignUpForm,BuyerSignUpForm
 # from django.shortcuts import render, get_object_or_404
-# from .models import Category, Product,User
+ 
 # from cart.forms import CartAddProductForm
 from django.views.generic import TemplateView
 
@@ -53,14 +53,28 @@ class BuyerSignUpView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('cart:cart_detail')
- 
 
-def home(request): 
-    title = 'Home' 
+def home(request):
+    title = 'Home'
     items = Item.objects.all()
 
-    return render(request, 'home.html', {'title':title,'items':items})
+    return render(request, 'home.html', {'title':title, 'items':items})
 
+def product_list(request,category_slug=None): 
+    category = None
+    categories = Category.objects.all()
+    today = dt.date.today()
+    products = Item.objects.filter(expiry_date=today)
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        products = Item.objects.filter(category=category)
+
+    context = {
+        'category': category,
+        'categories': categories,
+        'products': products
+    }
+    return render(request, 'shop/product/list.html', context)
 
 def detail(request, item_id):
     item = Item.objects.filter(id=item_id)
@@ -222,14 +236,14 @@ def product_list(request, category_slug=None):
         'categories': categories,
         'products': products
     }
-    return render(request, 'shop/product/list.html', context)
+    return render(request,'shop/product/list.html', context)
 
 
 def product_detail(request, id, slug):
-    product = get_object_or_404(Product, id=id, slug=slug, available=True)
+    product = get_object_or_404(Item, id=id, slug=slug, available=True)
     cart_product_form = CartAddProductForm()
     context = {
         'product': product,
         'cart_product_form': cart_product_form
     }
-    return render(request, 'shop/product/detail.html',context)
+    return render(request, 'shop/product/detail.html', context)

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.conf.urls import url,include
 from django.contrib.auth import views
 
-from instaclone.views import SellerSignUpView, BuyerSignUpView,SignUpView
+  
 
 
 urlpatterns = [
@@ -26,10 +26,8 @@ urlpatterns = [
     url(r'^orders/',include('orders.urls')),
     url(r'',include('instaclone.urls')),
     url(r'^accounts/', include('registration.backends.simple.urls')),
+    
     url(r'^logout/$', views.logout, {"next_page": '/'}), 
-
-    url('^accounts/signup/$',SignUpView.as_view(), name='signup'),
-    url('^accounts/signup/seller/$',SellerSignUpView.as_view(), name='seller_signup'),
-    url('^accounts/signup/buyer/$',BuyerSignUpView.as_view(), name='buyer_signup'),
+ 
 
 ]

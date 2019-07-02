@@ -8,18 +8,13 @@ from django.conf import settings
 from decimal import Decimal
 
 
-from django.contrib.auth.models import AbstractUser
+ 
 
 
 # class Seller(models.Model):
 #     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
-
-
-class User(AbstractUser):
-    is_buyer = models.BooleanField(default=False)
-    is_seller = models.BooleanField(default=False)
-
+ 
 
 class Profile(models.Model):
     business_logo = models.ImageField(upload_to='profile/',blank=True)

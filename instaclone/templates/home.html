@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'shop/base.html' %}
 {%load static%}
 {% load bootstrap3 %}
-{% block content %}
+
  <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
   {% endblock %}
 </head>
-
+{% block content %}
 <body>
   <div class ="container">
     <div class="row">
@@ -34,7 +34,7 @@
             <div id="">  
               <div> 
                 <div class="boxes" style ="height:450px;float:left;padding:20px;margin-top:100px;">
-                  <a href="" data-toggle= "modal" data-target="#{{pic.id}}">
+                  <a href="" data-toggle= "modal" data-target="#{{item.id}}">
                     <img src="{{item.item_picture.url}}" class="img-responsive" alt="Image" height="200px" width="300px">
                   </a>
                   <h6>Sold By : {{item.profile.username}}</h6>
@@ -47,7 +47,7 @@
           <a class="btn btn-default" href="{% url 'detail' item.id %}">Buy</a>
         </div> 
         
-        <div id="{{pic.id}}" class="modal fade" role="dialog">
+        <div id="{{item.id}}" class="modal fade" role="dialog">
           <div class="modal-dialog">
           
             <div class="modal-content modal-lg">
@@ -55,7 +55,7 @@
       
               </div>
               <div class="modal-body">
-                <img src="{{pic.image.url}}" class="img-responsive" alt="Image" height="1000px">
+                <img src="{{item.item_picture.url}}" class="img-responsive" alt="Image" height="1000px">
                 <div class ="description">
                   <p>{{item.item_name}}</p>
                 

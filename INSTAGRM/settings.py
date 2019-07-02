@@ -38,7 +38,7 @@ SECRET_KEY = '6^e#tmlf_3$)gjzii+7zv1b6y%hyz_f^u0%^j@y*ov5xqpv2w('
 DEBUG = True
 
 ALLOWED_HOSTS = []
-AUTH_USER_MODEL = 'instaclone.User'
+ 
 
 
 # Application definition
@@ -99,11 +99,11 @@ WSGI_APPLICATION = 'INSTAGRM.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
+        'NAME':  config('DB_NAME'), 
+        'USER':  config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': '',
+        # 'HOST': config('DB_HOST'),
+        # 'PORT': '',
     }
 
 }
@@ -161,3 +161,4 @@ ODERS_SESSION_ID = 'oders'
  
 
 LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = '/'
