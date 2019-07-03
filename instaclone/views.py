@@ -2,11 +2,11 @@ from cart.forms import CartAddProductForm
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http  import HttpResponse,HttpResponseRedirect,HttpRequest
 from django.contrib.auth.decorators import login_required
-from .models import Item,Profile,Request,Buyer,Category,User
+from .models import Item,Profile,Request,Category,User
 from cart.cart import Cart
 # from oders.models import Oder
 from django.contrib.auth.models import User
-from .forms import ImageForm, ProfileForm, BuyerLoginForm,RequestForm,BuyerForm
+from .forms import ImageForm, ProfileForm ,RequestForm
 from .email import send_notification_email
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
@@ -15,44 +15,44 @@ from django.views.decorators.http import require_POST
 import datetime as dt
 
 from django.views.generic import CreateView
-from .forms import SellerSignUpForm,BuyerSignUpForm
+ 
 # from django.shortcuts import render, get_object_or_404
  
 # from cart.forms import CartAddProductForm
 from django.views.generic import TemplateView
 
 
-class SignUpView(TemplateView):
-    template_name = 'registration/signup.html'
+# class SignUpView(TemplateView):
+#     template_name = 'registration/signup.html'
 
-class SellerSignUpView(CreateView):
-    model = User
-    form_class = SellerSignUpForm
-    template_name = 'registration/signup_form.html'
+# class SellerSignUpView(CreateView):
+#     model = User
+#     form_class = SellerSignUpForm
+#     template_name = 'registration/signup_form.html'
 
-    def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'seller'
-        return super().get_context_data(**kwargs)
+#     def get_context_data(self, **kwargs):
+#         kwargs['user_type'] = 'seller'
+#         return super().get_context_data(**kwargs)
 
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-        return redirect('profile')
+#     def form_valid(self, form):
+#         user = form.save()
+#         login(self.request, user)
+#         return redirect('profile')
 
 
-class BuyerSignUpView(CreateView):
-    model = User
-    form_class = BuyerSignUpForm
-    template_name = 'registration/signup_form.html'
+# class BuyerSignUpView(CreateView):
+#     model = User
+#     form_class = BuyerSignUpForm
+#     template_name = 'registration/signup_form.html'
 
-    def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'buyer'
-        return super().get_context_data(**kwargs)
+#     def get_context_data(self, **kwargs):
+#         kwargs['user_type'] = 'buyer'
+#         return super().get_context_data(**kwargs)
 
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-        return redirect('cart:cart_detail')
+#     def form_valid(self, form):
+#         user = form.save()
+#         login(self.request, user)
+#         return redirect('cart:cart_detail')
 
 def home(request):
     title = 'Home'
@@ -86,10 +86,11 @@ def detail(request, item_id):
 @login_required(login_url='/accounts/login/')
 def profile (request):
     current_user=request.user 
-     
+          
     profile_details =  Profile.objects.get(user=current_user.id)    
     print(profile_details.business_logo)
     items=Item.get_profile_items(profile_details.user_id)
+  
 
     return render(request,'profile.html',{'profile':profile,'profile_details':profile_details,'items':items})
 
@@ -247,3 +248,4 @@ def product_detail(request, id, slug):
         'cart_product_form': cart_product_form
     }
     return render(request, 'shop/product/detail.html', context)
+

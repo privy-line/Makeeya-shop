@@ -47,6 +47,8 @@ class Item(models.Model):
     upload_date = models.DateTimeField(auto_now_add=True)
     item_picture = models.ImageField(upload_to='profile')
     expiry_date = models.DateTimeField(auto_now_add=False)
+    available = models.BooleanField(default=True)
+    stock = models.PositiveIntegerField()
     original_price = models.IntegerField()
     today_price = models.IntegerField()
 
@@ -80,11 +82,7 @@ class Item(models.Model):
         return reverse('product_detail' , args=[self.id])
 
  
-class Buyer(models.Model):
-    first_name = models.CharField(max_length =300)
-    last_name = models.CharField(max_length =300)
-    email = models.EmailField()
-    password = models.CharField(max_length = 300, null=False)
+
 
 
 class Request(models.Model):

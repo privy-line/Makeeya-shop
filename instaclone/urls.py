@@ -16,6 +16,7 @@ urlpatterns=[
     url(r'^request/$', views.post_request, name='post_request'),
     url(r'^product_list$', views.product_list, name='product_list'),
    
+   
     url(r'^(\d+)/$', views.product_detail, name='product_detail'),
     url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$', views.product_detail, name='product_detail'),
 ]

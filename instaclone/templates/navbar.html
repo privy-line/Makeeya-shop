@@ -5,25 +5,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    .nav-link{color:#ffffff;}
-    .navbar-brand{color:darkorange;}
+ 
+    .navbar-brand{color:darkorange;} */
   </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-sm navbar" style="height:80px;background-color: darkblue;color: #ffffff;">
+<nav class="navbar navbar-expand-sm navbar" style="height:80px;background-color: darkblue;color: #ffffff;  overflow: hidden;position: fixed;">
   <div >
      
     {% if user.is_authenticated %}
-        <a class="navbar-brand" href="{% url 'home' %}" style="font-family: monospace;font-size:25px;font-weight: 40000; padding-top:23px;">MAKEEYA</a> 
+      <a class="navbar-brand" href="{% url 'home' %}" style="font-family: monospace;font-size:25px;font-weight: 40000; padding-top:23px;">MAKEEYA</a> 
       <h4 style= "color:white">{{profile_details.user.username }}</h4>
     
       <h6>{{profile_details.user.username }}</h6>
-      <li>
-        <a  style="color:white;"href="{% url 'profile' %}">View My Profile</a>
-       
-
+      <li style ="text-decoration:none;">
+          <!-- {% if profile_details %}
+                <a  style="color:white;"href="{% url 'profile' %}">View My Profile</a>
+          {% else %}
+                <a  style="color:white;"href="{% url 'edit_profile' %}">Create Profile</a>
+          {% endif %} -->
       </li>
-      <li>
+      <li style ="text-decoration:none;">
         <a  style="color:white;"href="/logout">Logout</a>
       </li>
    

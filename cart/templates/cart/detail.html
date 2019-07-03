@@ -67,8 +67,10 @@
                 </tbody>
             </table>
         <p class="text-right">
-            <a href="{% url 'product_list' %}" class="btn btn-default">Continue Shopping</a>
-            <a href="{% url 'orders:order_create' %}" class="btn btn-primary">Checkout</a>
+            <a href="{% url 'home' %}" class="btn btn-default">Continue Shopping</a>
+            <a href="{% url 'cart:buyer_login' %}" class="btn btn-primary">Login to checkout</a> 
+
+            <!-- <a href="{% url 'orders:order_create' %}" class="btn btn-primary">Checkout</a> -->
         </p>
         </div>
     </div>
