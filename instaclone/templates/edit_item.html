@@ -1,0 +1,35 @@
+{% extends 'shop/base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
+</head>
+<div class="container top" style="font-family: 'Arvo', serif;text-transform: uppercase;">
+        <center>
+                <hr>
+                <h3>UPDATE  ITEM</h3>
+                <hr>
+            </center>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <form action="{% url 'edit_item' item.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <center>
+                  <p><input type="text" class="" value="{{item.item_name}}" style=""></p>
+                  <!-- <p><img class="" src="{{item.item_picture.url}}" style=""></p> -->
+                  <p><input type="text" class="" value="{{item.expiry_date}}" style=""></p>
+                  <p><input type="text" class="" value="{{item.stock}}" style=""></p>
+                  <p><input type="text" class="" value="{{item.original_price}}" style=""></p>
+                  <p><input type="text" class="" value="{{item.today_price}}" style=""></p>  
+                  <p><input type="submit" class="btn btn-success btn-lg" value="UPDATE" style="background-color: darkorange;width: 20%;">
+                </center>
+            </form>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</div>
+{{ form.media }}
+{% endblock %}

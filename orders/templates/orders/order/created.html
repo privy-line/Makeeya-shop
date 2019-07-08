@@ -3,14 +3,43 @@
 {% block title %}
     Your Shopping Cart| Thank you
 {% endblock %}
-
 {% block content %}
+<!Doctype <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <script src="main.js"></script>
+    <style> 
+
+            .blink{
+                animation:blinkingText 3s infinite;
+            }
+            @keyframes blinkingText{
+            0%{     color: darkblue;    }
+            49%{    color: rgb(83, 83, 201); }
+            50%{    color: red; }
+            99%{    color:transparent;}
+            100%{   color: rgb(238, 6, 6);    }
+        }
+        </style>
+</head>
+<body>Your CPA Ca
+ 
+
+
+
+
     <div class="container">
         <div class="row" style="margin-top: 6%">
             <div class="col-md-8 col-md-offset-2">
                 <h3 class="page-header">Thank You For Shopping With Us
                 </h3>
-                <p>Your order has been successfully completed. Your order number is <strong>{{ order.id }}</strong>.</p>
+                <h4>Your order has been successfully completed. Your order number is <strong>{{ order.id }}</strong>. </h4>
+                <h4 class ="blink" style="color:darkred">Please Check your Phone to authorize the payment from your account!!</h4>
             </div>
         </div>
     </div>

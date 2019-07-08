@@ -6,7 +6,7 @@ from .models import Item,Profile,Request,Category,User
 from cart.cart import Cart
 # from oders.models import Oder
 from django.contrib.auth.models import User
-from .forms import ImageForm, ProfileForm ,RequestForm
+from .forms import ImageForm, ProfileForm ,RequestForm,EditItemForm
 from .email import send_notification_email
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
@@ -55,10 +55,11 @@ from django.views.generic import TemplateView
 #         return redirect('cart:cart_detail')
 
 def home(request):
-    title = 'Home'
+    title = 'Home'    
     items = Item.objects.all()
-
-    return render(request, 'home.html', {'title':title, 'items':items})
+    current_user=request.user
+    profile_details =  Profile.objects.all()
+    return render(request, 'home.html', {'title':title, 'items':items,"profile_details":profile_details })
 
 def product_list(request,category_slug=None): 
     category = None
@@ -249,3 +250,17 @@ def product_detail(request, id, slug):
     }
     return render(request, 'shop/product/detail.html', context)
 
+
+def edit_item(request,id):
+    current_user=request.user
+    item = Item.objects.filter(id=id).first()
+    if request.method == 'POST':
+        form = EditItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.profile = current_user           
+            item.save()
+            return redirect('profile')
+    else:
+        form = EditItemForm()
+    return render(request,'edit_item.html',{"form":form,"item":item})

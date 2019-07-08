@@ -12,4 +12,4 @@ class OrderCreateForm(forms.ModelForm):
 class PaymentForm(forms.ModelForm):
     class Meta:
         model = Payment
-        fields = ['phonenumber']
+        fields = ['phone_number']

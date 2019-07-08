@@ -10,9 +10,7 @@ from decimal import Decimal
 
  
 
-
-# class Seller(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+ 
 
  
 
@@ -41,7 +39,28 @@ class Profile(models.Model):
         return profile
 
 
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=150, db_index=True)
+    slug = models.SlugField(max_length=150, unique=True ,db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('name', )
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('instaclone:product_list_by_category', args=[self.slug])
+
+
 class Item(models.Model):
+    category = models.ForeignKey(Category, related_name='items', on_delete=models.CASCADE)
     item_name = models.CharField(max_length = 50)     
     profile = models.ForeignKey(User,on_delete=models.CASCADE)    
     upload_date = models.DateTimeField(auto_now_add=True)
@@ -100,19 +119,19 @@ class Request(models.Model):
             self.save()
         
     
-class Category(models.Model):
-    name = models.CharField(max_length=150, db_index=True)
-    slug = models.SlugField(max_length=150, unique=True ,db_index=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+# class Category(models.Model):
+#     name = models.CharField(max_length=150, db_index=True)
+#     slug = models.SlugField(max_length=150, unique=True ,db_index=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        ordering = ('name', )
-        verbose_name = 'category'
-        verbose_name_plural = 'categories'
+#     class Meta:
+#         ordering = ('name', )
+#         verbose_name = 'category'
+#         verbose_name_plural = 'categories'
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
-    def get_absolute_url(self):
-        return reverse('product_list_by_category', args=[self.slug])
+#     def get_absolute_url(self):
+#         return reverse('product_list_by_category', args=[self.slug])

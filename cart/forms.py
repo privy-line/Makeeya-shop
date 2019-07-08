@@ -19,3 +19,7 @@ class BuyerLoginForm(forms.ModelForm):
     class Meta:
         model= Buyer
         fields = ['email','password']
+        password = forms.CharField(widget=forms.PasswordInput)
+        widgets = {
+            'password': forms.PasswordInput(),
+        }

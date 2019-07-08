@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'shop/base.html' %}
 {% load bootstrap3 %}
 {% load static %}
 {% block content %}
@@ -23,11 +23,11 @@
 </head>
 <body>
    
-<form action="{% url 'post_request' %}" method="POST" enctype="multipart/form-data">
+<center><form action="{% url 'post_request' %}" method="POST" enctype="multipart/form-data" style="width:50%">
   {% csrf_token %}
   {% bootstrap_form form %}
   <input type="submit" class="btn btn-success btn-lg" value="POST">
-</form> 
+</form> </center>
 
 {% block scripts %}
 <script type="text/javascript" src="{%static 'js/scripts.js'%}"></script>

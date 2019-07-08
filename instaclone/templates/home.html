@@ -7,10 +7,10 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Instaclone</title>
+  <title>Makeeya</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="static/css/styles.css" />
- 
+  <
   <style>
     .boxes{
   box-shadow:0 3px 7px 0 rgba(165, 70, 70, 0.2);
@@ -24,27 +24,34 @@
   {% endblock %}
 </head>
 {% block content %}
-<body>
+<body style="background-color:rgb(238, 235, 235);font-family: 'Noto Sans', sans-serif;font-size:15px;text-transform:uppercase;">
   <div class ="container">
     <div class="row">
-        <a class="btn btn-success" href="{%url 'cart:cart_detail' %}">Go to Cart</a>
+        <center>
         {%for item in items%}
-        <div class="col-md-3">
+        <div class="col-lg-4">
           <center>
             <div id="">  
               <div> 
-                <div class="boxes" style ="height:450px;float:left;padding:20px;margin-top:100px;">
+                <div class="boxes" style ="height:600px;float:left;padding:20px;margin-top:100px; background-color:rgb(49, 107, 116);color:white;margin-bottom:40px; width:100%">
                   <a href="" data-toggle= "modal" data-target="#{{item.id}}">
-                    <img src="{{item.item_picture.url}}" class="img-responsive" alt="Image" height="200px" width="300px">
+                    <img src="{{item.item_picture.url}}" alt="Image" height="280px" width="260px">
                   </a>
-                  <h6>Sold By : {{item.profile.username}}</h6>
-                  <a>{{item.item_name}}</a>
-                  <h6>{{item.upload_date}}</h6>
+                  
+                  <h4 style="color:white;"><strong>{{item.item_name}}</strong></h4>
+                  
+                  <h5 style="color:white"><strong>Today Price:</strong>{{item.today_price}}Rwf</h5>
+                  <h5><strong>Expiry date:</strong> {{item.expiry_date}}</h5>
+                 
+                  
+                  <h5>Added on: {{item.upload_date}}</h5>
+                  <h5 style="text-transform: capitalize">Sold By : {{item.profile.username}}</h5>
+                  <center><a style="margin:20px;padding-left:20px;padding-right:20px;font-size:20px;font-weight: 40px;background-color: orange;color:black;"class="btn btn-success" href="{% url 'detail' item.id %}">Buy</a></center>
                 </div>
               </div>
             </div>
           </center>
-          <a class="btn btn-default" href="{% url 'detail' item.id %}">Buy</a>
+          
         </div> 
         
         <div id="{{item.id}}" class="modal fade" role="dialog">
@@ -73,7 +80,7 @@
               
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button style="margin-bottom: 20px" class="btn btn-sucess" data-dismiss="modal">Close</button>
               </div>
       
             </div>

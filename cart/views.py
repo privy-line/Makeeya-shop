@@ -41,9 +41,14 @@ def buyer_login(request):
     form = BuyerLoginForm(request.POST, request.FILES)
     if request.method == 'POST':
         if form.is_valid():
-            buyer=Buyer.objects.filter(email = form.cleaned_data['email']).first()
-            if buyer.password==form.cleaned_data['password']:
+            buyer=Buyer.objects.filter(email = form.cleaned_data['email'], password = form.cleaned_data['password']).first()
+            if buyer:
                 return redirect('orders:order_create')
+            else:
+                message = "Invalid username or password"
+                return render(request,'cart/buyer_login.html',{"form":form,"message":message})
+    else:
+        form = BuyerLoginForm()
     return render(request,'cart/buyer_login.html',{"form":form})
 
 def buyer_registration(request):
@@ -77,7 +82,7 @@ def payment(request,id):
         if form.is_valid():
             pay = form.save(commit=False)
             data['amount'] = str(prices)
-            data['phonenumber'] = pay.phonenumber
+            data['phone_number'] = pay.phone_number
             data['clienttime'] = '1556616823718'
             data['action'] = "deposit"
             data['appToken'] = "1f2e2951c7e2e355b443"

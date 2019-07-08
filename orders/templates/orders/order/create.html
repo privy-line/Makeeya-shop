@@ -1,4 +1,5 @@
 {% extends 'shop/base.html' %}
+{% load bootstrap3 %}
 {% load static %}
 {% block title %}
     Your Shopping Cart| Checkout
@@ -7,19 +8,39 @@
 {% block content %}
     <div class="container">
         <div class="row" style="margin-top: 6%">
-            <div class="col-md-8">
+            <div class="col-md-6">
+                
                 <h4 class="page-header">Checkout</h4>
-                <form action="." method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}<br>
-                    <input type="submit" class="btn btn-primary" value="Submit order">
-                </form>
+                <div class= "panel panel-default" >
+                    <!-- <div class ="panel-body">
+                       
+                        {{ form.as_p }}<br>
+                        <input type="submit" class="btn btn-primary" value="Submit order" >                    
+                            <form action="." method="post" style="background-color: darkcyan">
+                                    {% csrf_token %}
+                                    {% bootstrap_form form %}
+                                </form>
+                              
+                    </div> -->
+                    <div class="panel-body">
+                            <form  action="{% url 'orders:order_create' %}" method="POST">
+                                
+                              {% csrf_token %}
+                              {% bootstrap_form form %}
+                              <div class="form-group">
+                                <input type="submit" class="btn btn-primary btn-sm" value="Submit Order ">
+                              </div>
+                              <input type="hidden" name="next" value="{{next}}" style ="background-color:darkblue; color:cornsilk">
+                            </form>
+                    </div>
             </div>
-            <div class="col-md-4">
+            </div>
+            <div class="col-md-6">
+                
                 <div class="page-header">
-                    Your Order
+                    <h4>Your Order</h4>
                 </div>
-                <ul class="list-group">
+                <ul class="list-group" style ="background-color:darkblue; color:cornsilk">
                     {% for item in cart %}
                         <li class="list-group-item">
                         {{ item.quantity }}x {{ item.product.name }}
@@ -27,7 +48,7 @@
                         </li>
                     {% endfor %}
 
-                <li class="list-group-item active">Total Cost: Rwf. {{cart.get_total_price }}</li>
+                <li class="list-group-item active" style ="background-color:darkblue; color:cornsilk">Total Cost: Rwf. {{order.get_total_price }}</li>
                 </ul>
 
             </div>

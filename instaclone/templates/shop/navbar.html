@@ -5,113 +5,101 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet">
   <style>
     .nav-link{color:#ffffff;}
     .navbar-brand{color:darkorange;}
+    .dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
   </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-sm navbar" style="height:80px;background-color: darkblue;color: #ffffff;">
+<nav class="navbar navbar-expand-sm navbar" style="height:80px;background-color: rgb(49, 107, 116);color: #ffffff;font-family: 'Acme', sans-serif;">
   <div >
-     
+    <a class="navbar-brand" href="{% url 'home' %}" style="font-size:30px;font-weight: 40000; padding-top:23px;"><strong>MAKEEYA</strong></a> 
+  
+      
+    
+    </div>
+    
     {% if user.is_authenticated %}
-        <a class="navbar-brand" href="{% url 'home' %}" style="font-family: monospace;font-size:25px;font-weight: 40000; padding-top:23px;">MAKEEYA</a> 
-      <h4 style= "color:white">{{profile_details.user.username }}</h4>
-    
-      <h6>{{profile_details.user.username }}</h6>
-      <li>
-        <a  style="color:white;"href="{% url 'profile' %}">View My Profile</a>
        
-
-      </li>
-      <li>
-        <a  style="color:white;"href="/logout">Logout</a>
-      </li>
-   
-<!-- 
-    <div class="col-sm-6 col-md-6" id ="button"style="padding:4px" >
-        
-        <ul style= "height:50px; padding:10px" >
-          <li class="dropdown"style= "height:50px padding:10px" >
-            <a  style= "height:50px; font-size:20px;"href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="true">Account
-                      <span class="caret"></span>
-                  </a>
-            <ul class="dropdown-menu" role="menu" style="color:white; background-color:black">
-              <li style="color:white;">
-                <a style="color:white;"    href="{% url 'edit_profile' %}">Edit/create Profile</a>
-              </li>
-              <li>
-                  <a  style="color:white;"href="{% url 'profile' %}">View My Profile</a>
-                </li>
-              <li>
-                <a style="color:white;" href="/accounts/password/change">Change Password</a>
-              </li>
-              <li>
-                <a  style="color:white;"href="/logout">Logout</a>
-              </li>
-  
-              <li>
-                <a  style="color:white;"href="{% url 'create_item' %}">upload an Image</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-   -->
-                 
-        {% else %}
-    <ul>
-      
-        <li > <button><a style ="float:right" href="/accounts/login">My Trader Account</a>  </button>   </li> </ul>
-      
-          
-         <li> <a class="navbar-brand" href="{% url 'home' %}" style="font-family: monospace;font-size:25px;font-weight: 40000;color: white; padding-top:23px;">MAKEEYA</a>&nbsp;<br></li>
-  
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/category/1/">FOOD ITEMS</a>
-           <a class="dropdown-item" href="/category/2/">COSMETICS</a>
-            <a class="dropdown-item" href="/category/3/">OTHERS</a>
-        </div>
+      <!-- <h4 style= "font-size:17px;font-weight: 40000; margin:21px;float:left;color:white;">{{profile_details.user.username|upper }}</h4> -->
     
+      
+    
+        <a  style="font-size:17px;font-weight: 40000; margin:21px;float:right;color:white;"href="/logout">LOGOUT</a>
+        <a href="/accounts/password/change" style="font-size:17px;font-weight: 40000; margin:21px;float:right;color:white;">CHANGE PASSWORD</a>
+              {% if profile_details %}
+              <!-- <div class="dropdown">
+                 <button class="dropbtn"  style="font-size:17px;font-weight: 40000; margin:21px;float:right;color:white;">ITEMS</button>
+               
+                  <div class="dropdown-content">
+                    <a href="/category/1/">FOOD ITEMS</a>
+                    <a href="/category/2/">COSMETICS</a>
+                    <a href="/category/3/">OTHERS</a>
+                  </div>
+              </div> -->
+              <a  style="font-size:17px;font-weight: 40000; margin:21px;float:right;color:white;"href="{% url 'profile' %}">MY PROFILE</a>
+              <a  style="font-size:17px;font-weight: 40000; margin:21px;float:right;color:white;" href="{%url 'cart:cart_detail' %}" >MY CART</a>
+            {% else %}
+            
+              <a  style="font-size:17px;font-weight: 40000; margin:21px;float:right;color:white;"href="{% url 'edit_profile' %}">CREATE PROFILE</a>
+              <a  style="font-size:17px;font-weight: 40000; margin:21px;float:right;color:white;" href="{%url 'cart:cart_detail' %}" >MY CART</a>
+            {% endif %}
+  
+        {% else %}
+    <a href="/accounts/login" style="font-size:17px;font-weight: 40000; margin:21px;float:right;color:white;"><strong>MY TRADER ACCOUNT</strong></a>
+        
   
         {% endif %}
     
       </div>
-      
-  </div>
 
 
-
-  <div class="col-sm-6 col-md-6">
-    {% if user.is_authenticated %}
-    <ul>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account
-                  <span class="caret"></span>
-              </a>
-        <ul class="dropdown-menu" role="menu">
-          <li>
-            <a href="{% url 'home' %}">Home</a>
-          </li>
-          <li>
-            <a href="/accounts/password/change">Change Password</a>
-          </li>
-          <li>
-            <a href="/logout">Logout</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-    {% else %}
-    <li>
-      <a class='btn btn-default' href="/accounts/login">Login</a>
-    </li>
-
-    {% endif %}
-  </div>
-</div>
-
-    
- 
   
   
  

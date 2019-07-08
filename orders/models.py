@@ -43,7 +43,7 @@ class OrderItem(models.Model):
 
 class Payment(models.Model):
     order = models.ForeignKey(Order,on_delete=models.CASCADE, null=True)   
-    phonenumber=models.CharField(max_length=100,null=True)  
+    phone_number=models.CharField(max_length=100,null=True)  
     post_date = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):

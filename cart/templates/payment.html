@@ -9,7 +9,7 @@
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
 
- <title>New Article</title>
+ <title> </title>
  {{form.media}}
 
  {% block styles %} {% bootstrap_css %}
@@ -19,13 +19,28 @@
 
 <body>
 
-   <h1> WELCOME TO Payment</h1>
- <form  action="{%url 'cart:payment' order.id %}" method="post" enctype="multipart/form-data">
-   {%csrf_token%}
+   <center><h1 class ="page-header">Payment</h1> 
+    <div class ="container">
+      
+       
+         <div class= "panel panel-default-sm" style="width:30%">
+           <div class ="panel-heading">
 
-   {% bootstrap_form form%}
-   <input type="submit" class="btn btn-success btn-lg" value="Buy">
- </form>
+           </div>
+           <div class="panel-body">
+              <form  action="{%url 'cart:payment' order.id %}" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+             
+                {% bootstrap_form form%}
+                <input type="submit" class="btn btn-primary btn-sm" value="Launch Payment Process" style = "background-color:dark-blue;">
+              </form>
+           </div>
+           
+         </div>
+       
+   </div>
+ 
+  </center>
 
   {% block scripts %}
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

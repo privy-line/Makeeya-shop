@@ -12,9 +12,10 @@ urlpatterns=[
     url(r'^edit_profile',views.edit_profile, name='edit_profile'),
     url(r'^profile', views.profile, name='profile'), 
     url(r'^comments/(\d+)',views.comments,name="comments"),
- 
+    url(r'^(?P<category_slug>)/$', views.product_list, name='product_list'),
     url(r'^request/$', views.post_request, name='post_request'),
     url(r'^product_list$', views.product_list, name='product_list'),
+    url(r'^update/(\d+)$', views.edit_item, name='edit_item'),
    
    
     url(r'^(\d+)/$', views.product_detail, name='product_detail'),

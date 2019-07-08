@@ -10,33 +10,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-     
-  <center>
+<body style="font-family: 'Arvo', serif;">
+    <div class="jumbotron" style="margin-top:-5%;padding-top:-5%">
+           <center> <h2  >{{profile_details.user.username|upper }}</h2>
+           <p>{{profile_details.business_description}}</p></center>
+        <img src="{{profile_details.business_logo.url}}" class="img-responsive" alt="Image"style="border-radius:5px;height:100%;width: 100%; padding:-1%;"> 
 
-    <div class="row"id ="prof">
-        <div class="col-md-12" style="padding:50px";>        
-            <img src="{{profile_details.business_logo.url}}" class="img-responsive" alt="Image"style="border-radius:50%;height: 325px;width: 250px"> 
-            <ul><li><a  class="navbar-brand"style="color:black;"    href="{% url 'edit_profile' %}">Edit/create Profile</a></li></ul>             
-            <h2>{{profile_details.user.username }}</h2>
-            <button><a href ="{% url 'create_item' %}"> Post New Items</a> </button>
-            <hr style="color:black">
+<div class="well" margin-bottom:5%;width:95%">
+
+        <center> <button style="width:200px; height:60px;"><a style="color:black;" href ="{% url 'create_item' %}"> POST NEW ITEMS</a> </button>&nbsp;
+            <button style="width:200px; height:60px;"> <a   style="color:black;" href="{% url 'edit_profile' %}">EDIT PROFILE</a></button></center>
+
+      
         </div>
+          
     </div>
-  </center>
+    <div class="container">
+       
   <div class="row"> 
+      <hr>
+      <center><h3>STOCK</h3></center>
+      <hr>
     {%for item in items%}
     <center>
         <div id="">
             <div class="col-md-3">
-                <div class="boxes" style="height:360px;">
+                <div class="boxes">
                     <a href="" data-toggle= "modal" data-target="#{{item.id}}">
-                        <img src="{{item.item_picture.url}}" class="img-responsive" alt="Image" height="340px" width="340px">
+                        <img src="{{item.item_picture.url}}" alt="Image" height="280px" width="240px">
                     </a>
-                    <h3>{{item.item_description}}</h3>
+                    <h3>{{item.item_name}}</h3>
+                    <h6>EXPIRY DATE : <strong>{{item.expiry_date}}</strong></h6>
+                    <h6>ORIGINAL PRICE : {{item.original_price}}</h6>
+                    <h6>DISCOUNT PRICE : {{item.today_price}}</h6>
+                    
+                    <strong>Available : {{item.available}} <br> Stock : {{item.stock}}</strong>
                     <h6>Uploaded on : {{item.upload_date}}</h6>
+                    <button><a href="{% url 'edit_item' item.id%}">Edit</a></button>
+             
                 </div>
             </div> 
         </div>   

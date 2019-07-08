@@ -2,18 +2,32 @@
 {% load bootstrap3 %}
 
 {% block content %}
-<div class="container top">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
+</head>
+<div class="container top" style="font-family: 'Arvo', serif;text-transform: uppercase;">
     <div class="row edit-profile">
-        <div class="col-md-4 edit-areas">
-            <h3>Account</h3>
+        <center>
+            <hr>
+            <h3>MY ACCOUNT</h3>
+            <hr>
+        </center>
+        
+        <div>
         </div>
-        <div class="col-md-8">
-            <form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                <input type="submit" class="btn btn-success" value="Update">
-            </form>
-        </div>
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+                <form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <center>
+                    <input type="submit" class="btn btn-success" value="UPDATE" style="background-color: darkorange;width: 20%;"></center>
+                </form>
+                <div class="col-md-2"></div>
+            </div>
+ 
     </div>
 </div>
 {% endblock %}
+

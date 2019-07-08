@@ -34,3 +34,8 @@ class RequestForm(forms.ModelForm):
 # class CartAddProductForm(forms.Form):
 #     quantity = forms.TypedChoiceField(choices=PRODUCT_QUANTITY_CHOICES, coerce=int)
 #     update = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)
+class EditItemForm(forms.ModelForm):  
+    class Meta:
+        model = Item
+        exclude = ['post_date', 'profile','item_name','item_picture','expiry_date','stock','original_price','today_price']
+    
